@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
     // Open the input file
-    std::FILE* file_id = std::fopen("input.txt", "r");
+    std::FILE* file_id = std::fopen("../input.txt", "r");
 
     unsigned int sum = 0;
 
