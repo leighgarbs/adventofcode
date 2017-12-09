@@ -1,7 +1,13 @@
-// Calculates solution to Advent of Code 2017 Day 1
+// Calculates solution to Advent of Code 2017 Day 2
 
 #include <cstdio>
 #include <iostream>
+#include <vector>
+
+unsigned int circind(unsigned int index, unsigned int length)
+{
+    return index % length;
+}
 
 int main(int argc, char** argv)
 {
@@ -10,31 +16,31 @@ int main(int argc, char** argv)
 
     unsigned int sum = 0;
 
-    // Prime the loop by grabbing the first character
-    unsigned int digit_current;
-    std::fscanf(file_id, "%1u", &digit_current);
+    // For this part everything goes into a vector first
+    std::vector<unsigned int> inputdata_vec;
 
-    // Save the first digit, we need it at the end
-    unsigned int digit_first = digit_current;
-
-    int digit_next = 0;
+    unsigned int digit_current = 0;
 
     // Keep looping until there are no more digits
-    while (std::fscanf(file_id, "%1u", &digit_next) != EOF)
+    while (std::fscanf(file_id, "%1u", &digit_current) != EOF)
     {
-        if (digit_current == digit_next)
+        inputdata_vec.push_back(digit_current);
+    }
+
+    // Now we have the whole list.  Go over it again and calculate the desired
+    // sum
+    unsigned int halflen = inputdata_vec.size() / 2;
+    for (unsigned int i = 0; i < inputdata_vec.size(); i++)
+    {
+        if (inputdata_vec[i] ==
+            inputdata_vec[circind(i + halflen, inputdata_vec.size())])
         {
-            sum += digit_current;
+            sum += inputdata_vec[i];
         }
-
-        digit_current = digit_next;
     }
 
-    // Handle the wrap-around at the end as a special case
-    if (digit_first == digit_current)
-    {
-        sum += digit_current;
-    }
+    //std::cout << inputdata_vec.size() << "\n"
+    //          << index_circular(2152, inputdata_vec.size()) << "\n";
 
     // Print the sum
     std::cout << sum << "\n";
